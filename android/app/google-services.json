@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "400285055586",
+    "project_id": "fristpoject",
+    "storage_bucket": "fristpoject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:400285055586:android:86f0df2acbb5f1d25a6f3b",
+        "android_client_info": {
+          "package_name": "com.example.finalimagep"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiV3JjBGMW1ZxGFfKGSgX1hu4eQtGxaB4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
