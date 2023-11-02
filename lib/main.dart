@@ -1,5 +1,6 @@
-import 'package:finalimagep/adminpanel/adminpanel.dart';
-import 'package:finalimagep/maindesing/baindesing.dart';
+
+
+import 'package:finalimagep/maindesing/maindesing.dart';
 import 'package:finalimagep/poductpage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';

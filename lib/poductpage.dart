@@ -1,5 +1,5 @@
 
-import 'package:finalimagep/maindesing/dard.dart';
+
 import 'package:flutter/material.dart';
 
 class poductpage extends StatelessWidget {
@@ -144,19 +144,7 @@ class poductpage extends StatelessWidget {
             
           ),
 
-          SingleChildScrollView(
-            scrollDirection:Axis.horizontal,
-            child: Row(
-              children: [
           
-                smallcard(),
-                smallcard(),
-                smallcard(),
-                smallcard(),
-                smallcard()
-              ],
-            ),
-          )
 
         ],
       ),
