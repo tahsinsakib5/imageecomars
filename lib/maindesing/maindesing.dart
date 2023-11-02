@@ -21,128 +21,152 @@ class Homepage extends StatelessWidget {
                 image: DecorationImage(
                     image: AssetImage("assets/banner.png"), fit: BoxFit.cover)),
           ),
-          Expanded(child: FutureBuilder(
-      future:getdata(),
-      builder: (context, snapshot) {
-        if(snapshot.connectionState==ConnectionState.none){
-          if(snapshot.data!=[]){
-            print("snapshort ${snapshot.data!}");
-            var productlist = snapshot.data;
-            return ListView.builder(
-
-              
-       
-        itemCount:3,
-        shrinkWrap:true,
-        scrollDirection: Axis.horizontal,
-       
-        itemBuilder: (context, index) => 
-         Card(
-          child: Container(
-           
-            height: 300,
-            width: 200,
-            child: Column(
-              children: [
-                Expanded(
-                  flex: 3,
-                  child: Container(
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage(productlist[index].imageurl))),
-                  ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: Container(
-                     padding:const EdgeInsets.symmetric(horizontal:10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(productlist[index].title,style:const TextStyle(fontSize:20),),
-                        Text("price: \$ ${productlist[index].pricr}" ,style:const TextStyle(fontSize:17),),
-                        const Row(
-                          children: [
-                            Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                            ),
-                            Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                            ),
-                            Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                            ),
-                            Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                            ),
-                          ],
-                        ),
-                        MaterialButton(
-                          onPressed: () {
-                            Navigator.push(context,MaterialPageRoute(builder: (context) =>const poductpage(),));
+          Expanded(
+              child: FutureBuilder(
+                  future: getdata(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      if (snapshot.hasData) {
+                        print("snapshort ${snapshot.data}");
+                        var productlist = snapshot.data;
+                        return ListView.builder(
+                          itemCount: 3,
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            product _product = snapshot.data![index];
+                            return Card(
+                              child: Container(
+                                height: 300,
+                                width: 200,
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                      flex: 3,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                                image: AssetImage(
+                                                    _product.imageurl))),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 2,
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              _product.title,
+                                              style:
+                                                  const TextStyle(fontSize: 20),
+                                            ),
+                                            Text(
+                                              "price: \$ ${_product.pricr}",
+                                              style:
+                                                  const TextStyle(fontSize: 17),
+                                            ),
+                                            const Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Colors.amber,
+                                                ),
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Colors.amber,
+                                                ),
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Colors.amber,
+                                                ),
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Colors.amber,
+                                                ),
+                                              ],
+                                            ),
+                                            MaterialButton(
+                                              onPressed: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const poductpage(),
+                                                    ));
+                                              },
+                                              child: Container(
+                                                height: 37,
+                                                width: double.infinity,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.blue,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            50)),
+                                                child: const Center(
+                                                    child: Text(
+                                                  "buy now",
+                                                  style:
+                                                      TextStyle(fontSize: 17),
+                                                )),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
                           },
-                          child: Container(
-                            height: 37,
-                            width: double.infinity,
-                            decoration: BoxDecoration(color: Colors.blue,borderRadius: BorderRadius.circular(50)),
-                            child: const Center(child: Text("buy now",style: TextStyle(fontSize:17),)),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-             ),
-      );
-          } else{
-         return const Text("no");
-        }
-        }else{
-         return const Center(child:CircularProgressIndicator(),);
-        }
-      }
-     
-    )),
-          
-          ElevatedButton(onPressed: () {
-            Navigator.push(context,MaterialPageRoute(builder: (context) => const poductpage(),));
-
-
-          }, child:const Text("save")),
-
-
-          
-          
+                        );
+                      } else {
+                        return const Text("no");
+                      }
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  })),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const poductpage(),
+                    ));
+              },
+              child: const Text("save")),
         ],
       ),
     );
   }
-  Future getdata()async{
-    var colactionsnapshort = await FirebaseFirestore.instance.collection("add_data").get();
 
-    List allproduct = [];
+  Future<List<product>> getdata() async {
+    var colactionsnapshort =
+        await FirebaseFirestore.instance.collection("add_data").get();
 
-    for(var productmap in colactionsnapshort.docs){
-        String imageurl = productmap.get("imageurl");
-        String title = productmap.get("title");
-        String pricr = productmap.get("pricr");
-        String others = productmap.get("others");
-          
+    print('Total Doc : ${colactionsnapshort.docs.length}');
 
-    product  myproduct = product(imageurl: imageurl, title: title, pricr: pricr, others: others);
+    List<product> allproduct = [];
 
-    allproduct.add(myproduct);
-        
+    for (var productmap in colactionsnapshort.docs) {
+      String imageurl = productmap.get("imageurl");
+      String title = productmap.get("title");
+      String pricr = productmap.get("pricr");
+      String others = productmap.get("others");
+
+      product myproduct = product(
+          imageurl: imageurl, title: title, pricr: pricr, others: others);
+
+      allproduct.add(myproduct);
     }
 
-  
-    
-   }
+    return allproduct;
+  }
 }
